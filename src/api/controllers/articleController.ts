@@ -9,7 +9,7 @@ import {
 } from '../models/articleModel';
 import CustomError from '../../classes/CustomError';
 
-const articlesGet = (req: Request, res: Response<Article[]>) => {
+const articlesGet = (_req: Request, res: Response<Article[]>) => {
   const articles = getAllArticles();
   res.json(articles);
 };
@@ -24,7 +24,7 @@ const articleGet = (req: Request<{id: string}>, res: Response<Article>) => {
 };
 
 const articlePost = (
-  req: Request<unknown, unknown, Article>,
+  req: Request<unknown, unknown, Omit<Article, 'id'>>,
   res: Response<Article>,
   next: NextFunction,
 ) => {
@@ -37,13 +37,14 @@ const articlePost = (
 };
 
 const articlePut = (
-  req: Request<{id: string}, unknown, Article>,
+  req: Request<{id: string}, unknown, Omit<Article, 'id'>>,
   res: Response<Article>,
   next: NextFunction,
 ) => {
   try {
     const article = updateArticle(
       Number(req.params.id),
+      Number(req.body.author_id),
       req.body.title,
       req.body.description,
     );
@@ -59,7 +60,7 @@ const articleDelete = (
   next: NextFunction,
 ) => {
   try {
-    deleteArticle(Number(req.params.id));
+    deleteArticle(Number(req.params.id), Number(req.body.author_id));
     res.status(204).end();
   } catch (error) {
     next(new CustomError((error as Error).message, 500));

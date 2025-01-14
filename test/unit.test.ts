@@ -10,6 +10,7 @@ import {Article} from '../src/types/LocalTypes';
 // Create new article for testing
 const testArticle: Article = {
   id: 0, // This will be updated after creation
+  author_id: 2,
   title: 'Test Article',
   description: 'This is the content of article 1',
 };
@@ -23,6 +24,7 @@ describe('Article functions', () => {
       expect(newArticle).toBeDefined();
       expect(newArticle.title).toBe(testArticle.title);
       expect(newArticle.description).toBe(testArticle.description);
+      expect(newArticle.author_id).toBe(testArticle.author_id);
       testArticle.id = newArticle.id; // Update the reference article id
     } catch (error) {
       fail(
@@ -66,6 +68,7 @@ describe('Article functions', () => {
     try {
       const updatedArticle = updateArticle(
         testArticle.id,
+        testArticle.author_id,
         'Updated Title',
         'Updated Description',
       );
@@ -83,7 +86,7 @@ describe('Article functions', () => {
   // Test deleteArticle function
   it('deleteArticle should delete the article', () => {
     try {
-      deleteArticle(testArticle.id);
+      deleteArticle(testArticle.id, testArticle.author_id);
       expect(() => getArticle(testArticle.id)).toThrow();
     } catch (error) {
       fail(

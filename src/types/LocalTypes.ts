@@ -8,8 +8,15 @@ type ErrorResponse = MessageResponse & {
 
 type Article = {
   id: number;
+  author_id: number;
   title: string;
   description: string;
 };
 
-export type {MessageResponse, ErrorResponse, Article};
+type Author = {
+  id: number;
+  name: string;
+  email: string;
+};
+
+export type {MessageResponse, ErrorResponse, Article, Author};
