@@ -1,4 +1,4 @@
-const filename = 'example.sqlite';
+const filename = './data/example.sqlite';
 
 const tables = `CREATE TABLE IF NOT EXISTS articles (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
